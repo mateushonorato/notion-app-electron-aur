@@ -3,7 +3,7 @@
 # Contributor: Jaime Martínez Rincón <jaime@jamezrin.name>
 
 pkgname=notion-app-electron
-pkgver=3.10.0
+pkgver=3.11.0
 pkgrel=1
 pkgdesc='Your connected workspace for wiki, docs & projects'
 arch=(x86_64)
@@ -14,7 +14,7 @@ depends=(
 	gcc-libs
 	glibc
 	hicolor-icon-theme
-	electron29
+	electron31
 )
 makedepends=(
 	p7zip
@@ -25,13 +25,13 @@ install=.install
 
 source=(
 	"https://desktop-release.notion-static.com/Notion%20Setup%20${pkgver}.exe"
-	https://github.com/WiseLibs/better-sqlite3/releases/download/v9.4.5/better-sqlite3-v9.4.5-electron-v121-linux-x64.tar.gz
+	https://github.com/WiseLibs/better-sqlite3/releases/download/v11.1.2/better-sqlite3-v11.1.2-electron-v125-linux-x64.tar.gz
 	notion-app
 	notion.desktop
 )
-sha256sums=('77f8f9832a496b088ca8c830b8da5fc9871cc87768d51e202e19e9cc743b990a'
-            '49fd940252e77b9c8cfabd1297cedeedd0a33b7749055eb819cc7d5c3c010703'
-            'd909bdabe521417ecba5ad108139353574a57f6ebb3844da1340df731d90512b'
+sha256sums=('5cbed2d5edf1ad239e68604e3a56951d426a1ac029cabc3a4db8eee93bb73943'
+            '0147267cf7b33c77e0e8eb51de7d6bd6e24dae0c717f4d1a80efe743e2ab541e'
+            '4cd74d662ea9095b9e662f2f10b426c322276c8565b22cbb6e2cca766b169219'
             '19a5f973f1e9291081aa05512e07c61447e8c30e1a43dd22d0cc1090837d1e19')
 
 prepare() {
