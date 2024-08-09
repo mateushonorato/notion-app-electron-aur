@@ -8,3 +8,4 @@ Exec=notion-app %U
 Icon=notion
 Categories=Office;
 MimeType=x-scheme-handler/notion;
+StartupNotify=false
