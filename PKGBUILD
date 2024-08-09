@@ -3,7 +3,7 @@
 # Contributor: Jaime Martínez Rincón <jaime@jamezrin.name>
 
 pkgname=notion-app-electron
-pkgver=3.11.1
+pkgver=3.12.0
 pkgrel=1
 pkgdesc='Your connected workspace for wiki, docs & projects'
 arch=(x86_64)
@@ -29,7 +29,7 @@ source=(
 	notion-app
 	notion.desktop
 )
-sha256sums=('4d76f666c64166939392684445d02b4c71e8c416b9748989fb10518a393ca37c'
+sha256sums=('46113e15236efc29e3234cf5d4a11433a27d88583ef1cce2abcb0d032f527f5e'
             '0147267cf7b33c77e0e8eb51de7d6bd6e24dae0c717f4d1a80efe743e2ab541e'
             '4cd74d662ea9095b9e662f2f10b426c322276c8565b22cbb6e2cca766b169219'
             '19a5f973f1e9291081aa05512e07c61447e8c30e1a43dd22d0cc1090837d1e19')
@@ -44,11 +44,11 @@ prepare() {
 	icotool -x -w 256 "$srcdir/unpacked/icon.ico" -o "$srcdir/notion.png"
 	icotool -x -w 256 "$srcdir/resources/trayIcon.ico" -o "$srcdir/trayIcon.png"
 
-	sed -i -e 's/"win32"===process.platform/(true)/g
-		    s/_.Store.getState().app.preferences?.isAutoUpdaterDisabled/(true)/g
-		    s!extra-resources!/usr/share/notion-app!g
-		    s/trayIcon.ico/trayIcon.png/g' "$srcdir/unpacked/.webpack/main/index.js"
-	find $srcdir \( -name "clang-format.js" -or -name "conversion.js" -or -name "eslint-format.js" \) -delete -printf "rm %p to make namcap happy.\n"
+	sed -i -e 's/process.platform/"win32"/g
+		   s/_.Store.getState().app.preferences?.isAutoUpdaterDisabled/(true)/g
+		   s!extra-resources!/usr/share/notion-app!g
+		   s/trayIcon.ico/trayIcon.png/g' "$srcdir/unpacked/.webpack/main/index.js"
+	find $srcdir \( -name "*.c" -or -name "*.h" -or -name "*.gyp" -or -name "*.gypi" -name "clang-format.js" -or -name "conversion.js" -or -name "eslint-format.js" \) -delete -printf "rm %p to make namcap happy.\n"
 }
 
 package() {
