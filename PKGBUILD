@@ -48,7 +48,14 @@ prepare() {
 		   s/_.Store.getState().app.preferences?.isAutoUpdaterDisabled/(true)/g
 		   s!extra-resources!/usr/share/notion-app!g
 		   s/trayIcon.ico/trayIcon.png/g' "$srcdir/unpacked/.webpack/main/index.js"
-	find $srcdir \( -name "*.c" -or -name "*.h" -or -name "*.gyp" -or -name "*.gypi" -name "clang-format.js" -or -name "conversion.js" -or -name "eslint-format.js" \) -delete -printf "rm %p to make namcap happy.\n"
+	find $srcdir \( \
+		-name "*.c" -or \
+		-name "*.h" -or \
+		-name "*.gyp" -or \
+		-name "*.gypi" -or \
+		-name "clang-format.js" -or \
+		-name "conversion.js" -or \
+		-name "eslint-format.js" \) -delete -printf "rm %p to make namcap happy.\n"
 }
 
 package() {
@@ -63,5 +70,6 @@ package() {
 	install -Dm644 "$srcdir/notion.desktop" -t "$share/applications"
 	install -Dm644 "$srcdir/notion.png" -t "$share/icons/hicolor/256x256/apps"
 	install -Dm644 "$srcdir/trayIcon.png" -t "$share/notion-app"
+	# install -Dm644 "$srcdir/trayIcon.png" -t "$pkgdir/usr/lib/electron31/resources/" # monkey patch, fix the error but seems useless
 	find "$pkgdir" -type d -empty -delete
 }
