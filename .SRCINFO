@@ -1,7 +1,7 @@
 pkgbase = notion-app-electron
 	pkgdesc = Your connected workspace for wiki, docs & projects
 	pkgver = 3.12.0
-	pkgrel = 1
+	pkgrel = 2
 	url = https://www.notion.so/desktop
 	install = .install
 	arch = x86_64
