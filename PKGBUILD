@@ -4,7 +4,7 @@
 
 pkgname=notion-app-electron
 pkgver=3.12.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Your connected workspace for wiki, docs & projects"
 arch=(x86_64)
 url=https://www.notion.so/desktop
