@@ -64,9 +64,8 @@ prepare() {
 	# fixing tray icon and right click menu
 	sed -i 's|this\.tray\.on("click",(()=>{this\.onClick()}))|this.tray.setContextMenu(this.trayMenu),this.tray.on("click",(()=>{this.onClick()}))|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	sed -i 's|getIcon(){[^}]*}|getIcon(){return s.default.join(__dirname, "trayIcon.png");}|g' "$srcdir/asar_patched/.webpack/main/index.js"
-	# avoid running duplicated instances, restores the window if notion is running in tray
-	sed -i 's/v=r(69340),/v=r(69340),appControl=r(21852),gotTheLock=d.app.requestSingleInstanceLock(),/g' "$srcdir/asar_patched/.webpack/main/index.js"
-	sed -i 's/d.app.on("render-process-gone",/!gotTheLock?d.app.quit():t.logger.info("first instance!"),d.app.on("second-instance",()=>{const u=appControl.appController.getMostRecentlyFocusedWindowController();if(u) u.browserWindow.show();}),d.app.on("render-process-gone",/g' "$srcdir/asar_patched/.webpack/main/index.js"
+	# avoid running duplicated instances, fixes url opening
+	sed -i 's/a\.app\.on("open-url",_.handleOpenUrl)):"win32"===process\.platform/a\.app\.on("open-url",_.handleOpenUrl)):"linux"===process\.platform/g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# repacking asar with all the patches
 	asar p "$srcdir/asar_patched" "$srcdir/app.asar" --unpack *.node
 }
