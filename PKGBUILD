@@ -58,15 +58,15 @@ prepare() {
 	# adding tray icon to the unpacked resources
 	cp "$srcdir/notion.png" "$srcdir/asar_patched/.webpack/main/trayIcon.png"
 	# fully disabling auto updates
-	sed -i 's/if("darwin"===process.platform){const e=s.systemPreferences?.getUserDefault(S,"boolean"),t=_.Store.getState().app.preferences?.isAutoUpdaterDisabled;return Boolean(e||t)}return!1/return!0/g' "$srcdir/asar_patched/.webpack/main/index.js"
+	sed -i 's/if("darwin"===process.platform){const e=s.systemPreferences?.getUserDefault(E,"boolean"),t=_.Store.getState().app.preferences?.isAutoUpdaterDisabled;return Boolean(e||t)}return!1/return!0/g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# disabling the app menu since most of the options won't work
 	sed -i 's/Menu.setApplicationMenu(p(e))/Menu.setApplicationMenu(null)/g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# fixing tray icon and right click menu
 	sed -i 's|this\.tray\.on("click",(()=>{this\.onClick()}))|this.tray.setContextMenu(this.trayMenu),this.tray.on("click",(()=>{this.onClick()}))|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	sed -i 's|getIcon(){[^}]*}|getIcon(){return s.default.join(__dirname, "trayIcon.png");}|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# avoid running duplicated instances, restores the window if notion is running in tray
-	sed -i 's/g=r(69340);/g=r(69340),appControl=r(21852),gotTheLock=l.app.requestSingleInstanceLock();/g' "$srcdir/asar_patched/.webpack/main/index.js"
-	sed -i 's/l.app.on("render-process-gone",/!gotTheLock?l.app.quit():d.default.info("first instance!"),l.app.on("second-instance",()=>{const t=appControl.appController.getMostRecentlyFocusedWindowController();t?t.browserWindow.show():m.appController.newWindow({});}),l.app.on("render-process-gone",/g' "$srcdir/asar_patched/.webpack/main/index.js"
+	sed -i 's/v=r(69340),/v=r(69340),appControl=r(21852),gotTheLock=d.app.requestSingleInstanceLock(),/g' "$srcdir/asar_patched/.webpack/main/index.js"
+	sed -i 's/d.app.on("render-process-gone",/!gotTheLock?d.app.quit():t.logger.info("first instance!"),d.app.on("second-instance",()=>{const u=appControl.appController.getMostRecentlyFocusedWindowController();if(u) u.browserWindow.show();}),d.app.on("render-process-gone",/g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# repacking asar with all the patches
 	asar p "$srcdir/asar_patched" "$srcdir/app.asar" --unpack *.node
 }
