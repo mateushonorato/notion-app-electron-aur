@@ -14,7 +14,7 @@ depends=(
 	gcc-libs
 	glibc
 	hicolor-icon-theme
-	electron32
+	electron31
 )
 makedepends=(
 	p7zip
@@ -24,7 +24,7 @@ install=.install
 
 source=(
 	https://desktop-release.notion-static.com/Notion-${pkgver}.dmg
-	https://github.com/WiseLibs/better-sqlite3/releases/download/v11.2.1/better-sqlite3-v11.2.1-electron-v128-linux-x64.tar.gz
+	https://github.com/WiseLibs/better-sqlite3/releases/download/v11.2.1/better-sqlite3-v11.2.1-electron-v125-linux-x64.tar.gz
 	https://github.com/websockets/bufferutil/releases/download/v4.0.8/v4.0.8-linux-x64.tar
 	notion-app
 	notion.desktop
@@ -32,9 +32,9 @@ source=(
 )
 sha256sums=(
 	6f39295526f524a3bf117df13a4c0a01b21e8328e2aff428093382b49a26f4b8
-	bd96747ea2bbaf15018d4a5a7fabaa012740ea77b3e415573266d66b370372d4
+	f07a731e5da5337516bacd8f1d12cabb70a2e62f1caa4a43212b26fa7546cbe2
 	eac6fabcfa38e21c33763cb0e5efc1aa30c333cf9cc39f680fb8d12c88fefc93
-	19b4eb889ab9ef429f7537f7d25da7c49710114a397ccff0a5bc943db53651f8
+	6db70ef54f01967980c41551ed03720f8c55d65506a07f1d37bffe47dae87c22
 	87126c0da6f521ba93f9feefa5e1a96db66760bd63179a94feafbb0681496f1b
 	61ecb0c334becf60da4a94482f10672434944e4d93e691651ec666cafb036646
 )
