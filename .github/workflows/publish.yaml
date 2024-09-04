@@ -20,16 +20,11 @@ jobs:
 
       - name: Extract
         run: |
-          sudo apt-get install -y 7zip p7zip-full
           7z x "Notion-${NOTION_VERSION}.dmg" "Notion/Notion.app/Contents/Resources/app.asar" "Notion/Notion.app/Contents/Resources/app.asar.unpacked"
-          echo "7z x" && ls -al
           npx asar e "Notion/Notion.app/Contents/Resources/app.asar" "asar_patched"
-          echo "npx asar" && ls -al
-          tar xfz better-sqlite3-v11.2.1-electron-v125-linux-x64.tar.gz
-          echo "tar xfz" && ls -al
+          tar xfz better-sqlite3-v11.1.2-electron-v125-linux-x64.tar.gz
           tar xf v4.0.8-linux-x64.tar
-          echo "tar xf" && ls -al
-
+          
       - name: Patch
         run: |
           # replacing better_sqlite3 release in the patched resources
