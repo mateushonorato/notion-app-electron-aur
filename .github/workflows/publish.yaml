@@ -20,7 +20,7 @@ jobs:
 
       - name: Extract
         run: |
-          7z x "Notion-${NOTION_VERSION}.dmg" "Notion/Notion.app/Contents/Resources/app.asar" "Notion/Notion.app/Contents/Resources/app.asar.unpacked" -y -bse0 -bso0 || true
+          7z x "Notion-${NOTION_VERSION}.dmg" "Notion/Notion.app/Contents/Resources/app.asar" "Notion/Notion.app/Contents/Resources/app.asar.unpacked"
           echo "7z x" && ls -al
           npx asar e "Notion/Notion.app/Contents/Resources/app.asar" "asar_patched"
           echo "npx asar" && ls -al
