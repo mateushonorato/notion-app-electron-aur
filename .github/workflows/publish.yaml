@@ -2,20 +2,71 @@ name: Main
 
 on: push
 
+env:
+  NOTION_VERSION: "3.13.0"
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Check
+        run: |
+          for i in wget 7z npx; do echo "checking $i" && command -v $i;done
+
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build
-        run: echo ${{ github.sha }} > Release.txt
-      - name: Build2
-        run: echo HI > LICENSE
+      
+      - name: Download
+        run: |
+          wget https://desktop-release.notion-static.com/Notion-${NOTION_VERSION}.dmg
+          wget https://github.com/websockets/bufferutil/releases/download/v4.0.8/v4.0.8-linux-x64.tar
+          wget https://github.com/WiseLibs/better-sqlite3/releases/download/v11.1.2/better-sqlite3-v11.1.2-electron-v125-linux-x64.tar.gz
+	
+      - name: Extract
+        run: |
+          7z x "Notion-${NOTION_VERSION}.dmg" "Notion/Notion.app/Contents/Resources/app.asar" "Notion/Notion.app/Contents/Resources/app.asar.unpacked" -y -bse0 -bso0 || true
+          npx asar e "Notion/Notion.app/Contents/Resources/app.asar" "asar_patched"
+          tar xfz better-sqlite3-v11.2.1-electron-v125-linux-x64.tar.gz
+          tar xf v4.0.8-linux-x64.tar
+
+      - name: Patch
+        run: |
+          # replacing better_sqlite3 release in the patched resources
+          mv "build/Release/better_sqlite3.node" "asar_patched/node_modules/better-sqlite3/build/Release/"
+
+          # replacing bufferutil release in the patched resources
+          mv "linux-x64/node.napi.node" "asar_patched/node_modules/bufferutil/build/Release/bufferutil.node"
+
+          # removing some unnecessary files
+          rm "asar_patched/node_modules/node-mac-window" -r
+          rm "asar_patched/node_modules/better-sqlite3/build/Release/test_extension.node"
+          rm asar_patched/*.provisionprofile
+          rm "asar_patched/icon.icns"
+
+          # adding tray icon to the unpacked resources
+          cp "notion.png" "asar_patched/.webpack/main/trayIcon.png"
+
+          # fully disabling auto updates
+          sed -i 's/if("darwin"===process.platform){const e=s.systemPreferences?.getUserDefault(E,"boolean"),t=_.Store.getState().app.preferences?.isAutoUpdaterDisabled;return Boolean(e||t)}return!1/return!0/g' "asar_patched/.webpack/main/index.js"
+
+          # disabling the app menu since most of the options won't work
+          sed -i 's/Menu.setApplicationMenu(p(e))/Menu.setApplicationMenu(null)/g' "asar_patched/.webpack/main/index.js"
+
+          # fixing tray icon and right click menu
+          sed -i 's|this\.tray\.on("click",(()=>{this\.onClick()}))|this.tray.setContextMenu(this.trayMenu),this.tray.on("click",(()=>{this.onClick()}))|g' "asar_patched/.webpack/main/index.js"
+          sed -i 's|getIcon(){[^}]*}|getIcon(){return s.default.join(__dirname, "trayIcon.png");}|g' "asar_patched/.webpack/main/index.js"
+
+          # avoid running duplicated instances, restores the window if notion is running in tray
+          sed -i 's/a\.app\.on("open-url",_.handleOpenUrl)):"win32"===process\.platform/a\.app\.on("open-url",_.handleOpenUrl)):"linux"===process\.platform/g' "asar_patched/.webpack/main/index.js"
+
+
+      - name: Archive
+        run: |
+          npx asar p "asar_patched" "app.asar" --unpack *.node
+          tar cvf notion-linux.tar app.asar app.asar.unpacked
+
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.1
-          files: |
-            Release.txt
-            LICENSE
+          tag_name: v${{ env.NOTION_VERSION }}-0
+          files: notion-linux.tar
