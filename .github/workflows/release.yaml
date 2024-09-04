@@ -1,11 +1,9 @@
-name: Main
+name: Release
 
-on: push
-
-# on:
-#   push:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
 
 env:
   NOTION_VERSION: "3.13.0"
