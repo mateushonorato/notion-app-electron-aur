@@ -20,6 +20,7 @@ jobs:
 
       - name: Extract
         run: |
+          sudo apt-get install -y p7zip-full
           7z x "Notion-${NOTION_VERSION}.dmg" "Notion/Notion.app/Contents/Resources/app.asar" "Notion/Notion.app/Contents/Resources/app.asar.unpacked"
           echo "7z x" && ls -al
           npx asar e "Notion/Notion.app/Contents/Resources/app.asar" "asar_patched"
