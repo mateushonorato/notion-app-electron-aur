@@ -3,7 +3,7 @@ name: Main
 on: push
 
 env:
-  NOTION_VERSION: "3.13.0"
+  NOTION_VERSION: 3.13.0
 
 jobs:
   build:
@@ -15,13 +15,13 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Download
         run: |
           wget https://desktop-release.notion-static.com/Notion-${NOTION_VERSION}.dmg
           wget https://github.com/websockets/bufferutil/releases/download/v4.0.8/v4.0.8-linux-x64.tar
           wget https://github.com/WiseLibs/better-sqlite3/releases/download/v11.1.2/better-sqlite3-v11.1.2-electron-v125-linux-x64.tar.gz
-	
+
       - name: Extract
         run: |
           7z x "Notion-${NOTION_VERSION}.dmg" "Notion/Notion.app/Contents/Resources/app.asar" "Notion/Notion.app/Contents/Resources/app.asar.unpacked" -y -bse0 -bso0 || true
@@ -58,7 +58,6 @@ jobs:
 
           # avoid running duplicated instances, restores the window if notion is running in tray
           sed -i 's/a\.app\.on("open-url",_.handleOpenUrl)):"win32"===process\.platform/a\.app\.on("open-url",_.handleOpenUrl)):"linux"===process\.platform/g' "asar_patched/.webpack/main/index.js"
-
 
       - name: Archive
         run: |
