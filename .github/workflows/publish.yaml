@@ -2,8 +2,16 @@ name: Main
 
 on: push
 
+# on:
+#   push:
+#     branches:
+#       - main
+
 env:
-  NOTION_VERSION: 3.12.2
+  NOTION_VERSION: "3.13.0"
+
+  # Increament if fixing same notion version, otherwise should be zero
+  SUB_RELEASE: "0"
 
 jobs:
   build:
@@ -16,13 +24,13 @@ jobs:
         run: |
           wget https://desktop-release.notion-static.com/Notion-${NOTION_VERSION}.dmg
           wget https://github.com/websockets/bufferutil/releases/download/v4.0.8/v4.0.8-linux-x64.tar
-          wget https://github.com/WiseLibs/better-sqlite3/releases/download/v11.1.2/better-sqlite3-v11.1.2-electron-v125-linux-x64.tar.gz
+          wget https://github.com/WiseLibs/better-sqlite3/releases/download/v11.2.1/better-sqlite3-v11.2.1-electron-v125-linux-x64.tar.gz
 
       - name: Extract
         run: |
           7z x "Notion-${NOTION_VERSION}.dmg" "Notion/Notion.app/Contents/Resources/app.asar" "Notion/Notion.app/Contents/Resources/app.asar.unpacked"
           npx asar e "Notion/Notion.app/Contents/Resources/app.asar" "asar_patched"
-          tar xfz better-sqlite3-v11.1.2-electron-v125-linux-x64.tar.gz
+          tar xfz better-sqlite3-v11.2.1-electron-v125-linux-x64.tar.gz
           tar xf v4.0.8-linux-x64.tar
           
       - name: Patch
@@ -63,5 +71,5 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ env.NOTION_VERSION }}-0
+          tag_name: v${{ env.NOTION_VERSION }}-${{ env.SUB_RELEASE }}
           files: notion-linux.tar
