@@ -9,10 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check
-        run: |
-          for i in wget 7z npx; do echo "checking $i" && command -v $i;done
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -25,9 +21,13 @@ jobs:
       - name: Extract
         run: |
           7z x "Notion-${NOTION_VERSION}.dmg" "Notion/Notion.app/Contents/Resources/app.asar" "Notion/Notion.app/Contents/Resources/app.asar.unpacked" -y -bse0 -bso0 || true
+          echo "7z x" && ls -al
           npx asar e "Notion/Notion.app/Contents/Resources/app.asar" "asar_patched"
+          echo "npx asar" && ls -al
           tar xfz better-sqlite3-v11.2.1-electron-v125-linux-x64.tar.gz
+          echo "tar xfz" && ls -al
           tar xf v4.0.8-linux-x64.tar
+          echo "tar xf" && ls -al
 
       - name: Patch
         run: |
