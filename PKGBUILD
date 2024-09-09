@@ -3,8 +3,8 @@
 # Contributor: Jaime Martínez Rincón <jaime@jamezrin.name>
 
 pkgname=notion-app-electron
-pkgver=3.13.0
-pkgrel=2
+pkgver=3.14.0
+pkgrel=1
 pkgdesc="Your connected workspace for wiki, docs & projects"
 arch=(x86_64)
 url=https://www.notion.so/desktop
@@ -31,7 +31,7 @@ source=(
 	notion.png
 )
 sha256sums=(
-	6f39295526f524a3bf117df13a4c0a01b21e8328e2aff428093382b49a26f4b8
+	5d7b762f522754b74c78bd0f0ebf292e6750224ee7bc4a3837156bdb5722ab11 
 	f07a731e5da5337516bacd8f1d12cabb70a2e62f1caa4a43212b26fa7546cbe2
 	eac6fabcfa38e21c33763cb0e5efc1aa30c333cf9cc39f680fb8d12c88fefc93
 	6db70ef54f01967980c41551ed03720f8c55d65506a07f1d37bffe47dae87c22
