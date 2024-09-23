@@ -62,8 +62,8 @@ prepare() {
 	cp "$srcdir/notion.png" "$srcdir/asar_patched/.webpack/main/trayIcon.png"
 	# fully disabling auto updates
 	sed -i 's/if("darwin"===process.platform){const e=s.systemPreferences?.getUserDefault(E,"boolean"),t=_.Store.getState().app.preferences?.isAutoUpdaterDisabled;return Boolean(e||t)}return!1/return!0/g' "$srcdir/asar_patched/.webpack/main/index.js"
-	# disabling the app menu since most of the options won't work
-	sed -i 's/Menu.setApplicationMenu(p(e))/Menu.setApplicationMenu(null)/g' "$srcdir/asar_patched/.webpack/main/index.js"
+	# this can disable app menu when the options won't work. disbled in the current version because it's working now, but it's here for future reference
+	# sed -i 's|Menu.setApplicationMenu(p(e))|Menu.setApplicationMenu(null)|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# fixing tray icon and right click menu
 	sed -i 's|this\.tray\.on("click",(()=>{this\.onClick()}))|this.tray.setContextMenu(this.trayMenu),this.tray.on("click",(()=>{this.onClick()}))|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	sed -i 's|getIcon(){[^}]*}|getIcon(){return s.default.join(__dirname, "trayIcon.png");}|g' "$srcdir/asar_patched/.webpack/main/index.js"
