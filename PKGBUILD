@@ -68,7 +68,7 @@ prepare() {
 	sed -i 's|this.tray.on("click",(()=>{this.onClick()}))|this.tray.setContextMenu(this.trayMenu),this.tray.on("click",(()=>{this.onClick()}))|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	sed -i 's|getIcon(){[^}]*}|getIcon(){return s.default.join(__dirname, "trayIcon.png");}|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# avoid running duplicated instances, fixes url opening
-	sed -i 's/a\.app\.on("open-url",_.handleOpenUrl)):"win32"===process\.platform/a\.app\.on("open-url",_.handleOpenUrl)):"linux"===process\.platform/g' "$srcdir/asar_patched/.webpack/main/index.js"
+	sed -i 's|o.app.on("open-url",w.handleOpenUrl)):"win32"===process.platform|o.app.on("open-url",w.handleOpenUrl)):"linux"===process.platform|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# repacking asar with all the patches
 	asar p "$srcdir/asar_patched" "$srcdir/app.asar" --unpack *.node
 }
