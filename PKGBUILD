@@ -26,7 +26,7 @@ makedepends=(
 install=.install
 
 source=(
-	https://desktop-release.notion-static.com/Notion-${pkgver}.dmg
+	https://desktop-release.notion-static.com/Notion%20Setup%20${pkgver}.exe
 	https://github.com/WiseLibs/better-sqlite3/releases/download/v${_bettersqlite3ver}/better-sqlite3-v${_bettersqlite3ver}-electron-v${_elecronver}-linux-x64.tar.gz
 	https://github.com/websockets/bufferutil/releases/download/v${_bufferutilver}/v${_bufferutilver}-linux-x64.tar
 	notion-app
@@ -43,12 +43,13 @@ sha256sums=(
 )
 
 prepare() {
-	# extracting app.asar from dmg with 7z and ignoring header error
-	7z x "$srcdir/Notion-${pkgver}.dmg" "Notion/Notion.app/Contents/Resources/app.asar" "Notion/Notion.app/Contents/Resources/app.asar.unpacked" -y -bse0 -bso0 || true
-	# removing dmg already extracted
-	rm "$srcdir/Notion-${pkgver}.dmg"
+	# extracting app.asar from installer with 7z and ignoring errors
+	7z x "./Notion%20Setup%20${pkgver}.exe" "\$PLUGINSDIR/app-64.7z" -y -bse0 -bso0 || true
+	7z x "./\$PLUGINSDIR/app-64.7z" "resources/app.asar" "resources/app.asar.unpacked" -y -bse0 -bso0 || true
+	rm "./Notion%20Setup%20${pkgver}.exe"
+	rm "./\$PLUGINSDIR/app-64.7z"
 	# extracting resources from app.asar
-	asar e "$srcdir/Notion/Notion.app/Contents/Resources/app.asar" "$srcdir/asar_patched"
+	asar e "$srcdir/resources/app.asar" "$srcdir/asar_patched"
 	# replacing better_sqlite3 release in the patched resources
 	mv "$srcdir/build/Release/better_sqlite3.node" "$srcdir/asar_patched/node_modules/better-sqlite3/build/Release/"
 	# replacing bufferutil release in the patched resources
