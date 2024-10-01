@@ -55,11 +55,9 @@ prepare() {
 	mv "$srcdir/build/Release/better_sqlite3.node" "$srcdir/asar_patched/node_modules/better-sqlite3/build/Release/"
 	# replacing bufferutil release in the patched resources
 	mv "$srcdir/linux-x64/node.napi.node" "$srcdir/asar_patched/node_modules/bufferutil/build/Release/bufferutil.node"
-	# removing some unnecessary files
-	rm "$srcdir/asar_patched/node_modules/node-mac-window" -r
-	rm "$srcdir/asar_patched/node_modules/better-sqlite3/build/Release/test_extension.node"
-	rm $srcdir/asar_patched/*.provisionprofile
-	rm "$srcdir/asar_patched/icon.icns"
+	# removing some unnecessary files (keeping them in this version to see if it improves stability)
+	# rm "$srcdir/asar_patched/node_modules/node-mac-window" -r
+	# rm "$srcdir/asar_patched/node_modules/better-sqlite3/build/Release/test_extension.node"
 	# adding tray icon to the unpacked resources
 	cp "$srcdir/notion.png" "$srcdir/asar_patched/.webpack/main/trayIcon.png"
 	# fully disabling auto updates
