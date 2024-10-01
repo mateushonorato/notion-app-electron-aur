@@ -1,5 +1,6 @@
 # Maintainer: Asuka Minato <i at asukaminato dot eu dot org>
 # Maintainer: Kid <hi at xuann dot wang>
+# Maintainer: Mateus Honorato <mateush.honorato@gmail.com>
 # Contributor: Jaime Martínez Rincón <jaime@jamezrin.name>
 
 pkgname=notion-app-electron
