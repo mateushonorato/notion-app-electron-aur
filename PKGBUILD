@@ -6,7 +6,7 @@
 pkgname=notion-app-electron
 pkgver=3.16.0
 _bettersqlite3ver=11.2.1
-_bufferutilver=4.0.8
+_bufferutilver=4.0.3
 _elecronver=125
 pkgrel=1
 pkgdesc="Your connected workspace for wiki, docs & projects"
