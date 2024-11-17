@@ -69,7 +69,7 @@ prepare() {
 	sed -i 's|getIcon(){[^}]*}|getIcon(){return s.default.join(__dirname, "trayIcon.png");}|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# avoid running duplicated instances, fixes url opening
 	sed -i 's|handleOpenUrl);else if("win32"===process.platform)|handleOpenUrl);else if("linux"===process.platform)|g' "$srcdir/asar_patched/.webpack/main/index.js"
-	sed -i 's|async function(){await(0,b.setupObservability)(),|o.app.requestSingleInstanceLock() ? async function(){await(0,b.setupObservability)(),|g' "$srcdir/asar_patched/.webpack/main/index.js"
+	sed -i 's|async function(){await(0,m.setupObservability)(),|o.app.requestSingleInstanceLock() ? async function(){await(0,m.setupObservability)(),|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	sed -i 's|setupAboutPanel)()}()}()|setupAboutPanel)()}()}() : o.app.quit();|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# fake the useragent as windows to fix the spellchecker languages selector and other issues
 	sed -i 's|e.setUserAgent(`${e.getUserAgent()} WantsServiceWorker`),|e.setUserAgent(`${e.getUserAgent().replace("Linux", "Windows")} WantsServiceWorker`),|g' "$srcdir/asar_patched/.webpack/main/index.js"
