@@ -4,10 +4,10 @@
 # Contributor: Jaime Martínez Rincón <jaime@jamezrin.name>
 
 pkgname=notion-app-electron
-pkgver=3.18.0
-_bettersqlite3ver=11.3.0
+pkgver=4.0.0
+_bettersqlite3ver=11.5.0
 _bufferutilver=4.0.8
-_elecronver=128
+_elecronver=130
 pkgrel=1
 pkgdesc="Your connected workspace for wiki, docs & projects"
 arch=(x86_64)
@@ -18,7 +18,7 @@ depends=(
 	gcc-libs
 	glibc
 	hicolor-icon-theme
-	electron32
+	electron33
 )
 makedepends=(
 	p7zip
@@ -35,10 +35,10 @@ source=(
 	notion.png
 )
 sha256sums=(
-	ab68e4239c574c16d72552a5549619227319019c35971573e0533545a6a497cb
-	a1d11acc261890af75bbfef121ed5cb0641fa094b1235f4f1d747b8a8f9427f2
+	d77629065448efc17cdbf625d62a1b480d147c216a6e724d6834b58dc8c68adc
+	994c28b04802ff9e94504364208f948932c6a0e363524cb43d89a09d67fbdf36
 	eac6fabcfa38e21c33763cb0e5efc1aa30c333cf9cc39f680fb8d12c88fefc93
-	19b4eb889ab9ef429f7537f7d25da7c49710114a397ccff0a5bc943db53651f8
+	52ddf363ea110e5735123478769cda90c9b0581eb601d1a261c0ab3b911f292e
 	19a5f973f1e9291081aa05512e07c61447e8c30e1a43dd22d0cc1090837d1e19
 	61ecb0c334becf60da4a94482f10672434944e4d93e691651ec666cafb036646
 )
