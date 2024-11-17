@@ -67,6 +67,8 @@ prepare() {
 	# fixing tray icon and right click menu
 	sed -i 's|this.tray.on("click",(()=>{this.onClick()}))|this.tray.setContextMenu(this.trayMenu),this.tray.on("click",(()=>{this.onClick()}))|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	sed -i 's|getIcon(){[^}]*}|getIcon(){return s.default.join(__dirname, "trayIcon.png");}|g' "$srcdir/asar_patched/.webpack/main/index.js"
+	# use the windows version of the tray menu
+	sed -i 's|r="win32"===process.platform?function(e,t)|r="linux"===process.platform?function(e,t)|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# avoid running duplicated instances, fixes url opening
 	sed -i 's|handleOpenUrl);else if("win32"===process.platform)|handleOpenUrl);else if("linux"===process.platform)|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	sed -i 's|async function(){await(0,m.setupObservability)(),|o.app.requestSingleInstanceLock() ? async function(){await(0,m.setupObservability)(),|g' "$srcdir/asar_patched/.webpack/main/index.js"
