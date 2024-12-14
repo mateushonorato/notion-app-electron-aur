@@ -4,7 +4,7 @@
 # Contributor: Jaime Martínez Rincón <jaime@jamezrin.name>
 
 pkgname=notion-app-electron
-pkgver=4.1.2
+pkgver=4.2.0
 _bettersqlite3ver=11.7.0
 _bufferutilver=4.0.8
 _elecronver=130
@@ -35,7 +35,7 @@ source=(
 	notion.png
 )
 sha256sums=(
-	876837e80c7425cb40cbed2e575f514898b136f6193606e66d88c31008fdf7fb
+	d0cf68ecb35033fce0a818524ae71f9efbf0383f947d2464b067f334174b4ed2
 	8f8ae4d4bedbcfca1346906fec84883e3e6ad9d2a6a6b3444180e204a2ad3148
 	eac6fabcfa38e21c33763cb0e5efc1aa30c333cf9cc39f680fb8d12c88fefc93
 	52ddf363ea110e5735123478769cda90c9b0581eb601d1a261c0ab3b911f292e
@@ -60,21 +60,21 @@ prepare() {
 	# rm "$srcdir/asar_patched/node_modules/better-sqlite3/build/Release/test_extension.node"
 	# adding tray icon to the unpacked resources
 	cp "$srcdir/notion.png" "$srcdir/asar_patched/.webpack/main/trayIcon.png"
-	# fully disabling auto updates
-	sed -i 's/if("darwin"===process.platform){const e=s.systemPreferences?.getUserDefault(E,"boolean"),t=T.Store.getState().app.preferences?.isAutoUpdaterDisabled,r=T.Store.getState().app.preferences?.isAutoUpdaterOSSupportBypass,n=(0,b.isOsUnsupportedForAutoUpdates)();return Boolean(e||t||!r&&n)}return!1/return!0/g' "$srcdir/asar_patched/.webpack/main/index.js"
-	# this can disable app menu when the options won't work. disbled in the current version because it's working now, but it's here for future reference
-	# sed -i 's|Menu.setApplicationMenu(p(e))|Menu.setApplicationMenu(null)|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# fixing tray icon and right click menu
 	sed -i 's|this.tray.on("click",(()=>{this.onClick()}))|this.tray.setContextMenu(this.trayMenu),this.tray.on("click",(()=>{this.onClick()}))|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	sed -i 's|getIcon(){[^}]*}|getIcon(){return s.default.join(__dirname, "trayIcon.png");}|g' "$srcdir/asar_patched/.webpack/main/index.js"
-	# use the windows version of the tray menu
-	sed -i 's|r="win32"===process.platform?function(e,t)|r="linux"===process.platform?function(e,t)|g' "$srcdir/asar_patched/.webpack/main/index.js"
+	# fake the useragent as windows to fix the spellchecker languages selector and other issues
+	sed -i 's|e.setUserAgent(`${e.getUserAgent()} WantsServiceWorker`),|e.setUserAgent(`${e.getUserAgent().replace("Linux", "Windows")} WantsServiceWorker`),|g' "$srcdir/asar_patched/.webpack/main/index.js"
+	# fully disabling auto updates
+	sed -i 's/if("darwin"===process.platform){const e=l.systemPreferences?.getUserDefault(C,"boolean"),t=_.Store.getState().app.preferences?.isAutoUpdaterDisabled,r=_.Store.getState().app.preferences?.isAutoUpdaterOSSupportBypass,n=(0,v.isOsUnsupportedForAutoUpdates)();return Boolean(e||t||!r&&n)}return!1/return!0/g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# avoid running duplicated instances, fixes url opening
 	sed -i 's|handleOpenUrl);else if("win32"===process.platform)|handleOpenUrl);else if("linux"===process.platform)|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	sed -i 's|async function(){await(0,m.setupObservability)(),|o.app.requestSingleInstanceLock() ? async function(){await(0,m.setupObservability)(),|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	sed -i 's|setupAboutPanel)()}()}()|setupAboutPanel)()}()}() : o.app.quit();|g' "$srcdir/asar_patched/.webpack/main/index.js"
-	# fake the useragent as windows to fix the spellchecker languages selector and other issues
-	sed -i 's|e.setUserAgent(`${e.getUserAgent()} WantsServiceWorker`),|e.setUserAgent(`${e.getUserAgent().replace("Linux", "Windows")} WantsServiceWorker`),|g' "$srcdir/asar_patched/.webpack/main/index.js"
+	# use the windows version of the tray menu
+	sed -i 's|r="win32"===process.platform?function(e,t)|r="linux"===process.platform?function(e,t)|g' "$srcdir/asar_patched/.webpack/main/index.js"
+	# this can disable app menu when the options won't work. disbled in the current version because it's working now, but it's here for future reference
+	# sed -i 's|Menu.setApplicationMenu(p(e))|Menu.setApplicationMenu(null)|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# repacking asar with all the patches
 	asar p "$srcdir/asar_patched" "$srcdir/app.asar" --unpack *.node
 }
