@@ -62,11 +62,11 @@ prepare() {
 	cp "$srcdir/notion.png" "$srcdir/asar_patched/.webpack/main/trayIcon.png"
 	# fixing tray icon and right click menu
 	sed -i 's|this.tray.on("click",(()=>{this.onClick()}))|this.tray.setContextMenu(this.trayMenu),this.tray.on("click",(()=>{this.onClick()}))|g' "$srcdir/asar_patched/.webpack/main/index.js"
-	sed -i 's|getIcon(){[^}]*}|getIcon(){return s.default.join(__dirname, "trayIcon.png");}|g' "$srcdir/asar_patched/.webpack/main/index.js"
+	sed -i 's|getIcon(){[^}]*}|getIcon(){return require("path").resolve(__dirname, "trayIcon.png");}|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# fake the useragent as windows to fix the spellchecker languages selector and other issues
 	sed -i 's|e.setUserAgent(`${e.getUserAgent()} WantsServiceWorker`),|e.setUserAgent(`${e.getUserAgent().replace("Linux", "Windows")} WantsServiceWorker`),|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# fully disabling auto updates
-	sed -i 's/if("darwin"===process.platform){const e=l.systemPreferences?.getUserDefault(C,"boolean"),t=_.Store.getState().app.preferences?.isAutoUpdaterDisabled,r=_.Store.getState().app.preferences?.isAutoUpdaterOSSupportBypass,n=(0,v.isOsUnsupportedForAutoUpdates)();return Boolean(e||t||!r&&n)}return!1/return!0/g' "$srcdir/asar_patched/.webpack/main/index.js"
+	sed -i 's|if("darwin"===process.platform){const e=l.systemPreferences?.getUserDefault(C,"boolean"),t=_.Store.getState().app.preferences?.isAutoUpdaterDisabled,r=_.Store.getState().app.preferences?.isAutoUpdaterOSSupportBypass,n=(0,v.isOsUnsupportedForAutoUpdates)();return Boolean(e\|\|t\|\|!r&&n)}return!1|return!0|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	# avoid running duplicated instances, fixes url opening
 	sed -i 's|handleOpenUrl);else if("win32"===process.platform)|handleOpenUrl);else if("linux"===process.platform)|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	sed -i 's|async function(){await(0,m.setupObservability)(),|o.app.requestSingleInstanceLock() ? async function(){await(0,m.setupObservability)(),|g' "$srcdir/asar_patched/.webpack/main/index.js"
