@@ -4,8 +4,8 @@
 # Contributor: Jaime Martínez Rincón <jaime@jamezrin.name>
 
 pkgname=notion-app-electron
-pkgver=4.2.0
-_bettersqlite3ver=11.7.0
+pkgver=4.3.0
+_bettersqlite3ver=11.7.2
 _bufferutilver=4.0.8
 _elecronver=130
 pkgrel=1
@@ -35,8 +35,8 @@ source=(
 	notion.png
 )
 sha256sums=(
-	d0cf68ecb35033fce0a818524ae71f9efbf0383f947d2464b067f334174b4ed2
-	8f8ae4d4bedbcfca1346906fec84883e3e6ad9d2a6a6b3444180e204a2ad3148
+	99c8bdb4f28c4a45861fcc818012739ac5385d5147b19cf17f2e095dd222cf99
+	bdb5e742345effd0a22c11c8da91be2a7104b3cc209eadcabf871e31c988a57e
 	eac6fabcfa38e21c33763cb0e5efc1aa30c333cf9cc39f680fb8d12c88fefc93
 	52ddf363ea110e5735123478769cda90c9b0581eb601d1a261c0ab3b911f292e
 	19a5f973f1e9291081aa05512e07c61447e8c30e1a43dd22d0cc1090837d1e19
