@@ -4,7 +4,7 @@
 # Contributor: Jaime Martínez Rincón <jaime@jamezrin.name>
 
 pkgname=notion-app-electron
-pkgver=4.3.0
+pkgver=4.8.4
 _bettersqlite3ver=11.7.2
 _bufferutilver=4.0.8
 _elecronver=130
@@ -34,14 +34,14 @@ source=(
 	notion.desktop
 	notion.png
 )
-sha256sums=(
-	99c8bdb4f28c4a45861fcc818012739ac5385d5147b19cf17f2e095dd222cf99
-	bdb5e742345effd0a22c11c8da91be2a7104b3cc209eadcabf871e31c988a57e
-	eac6fabcfa38e21c33763cb0e5efc1aa30c333cf9cc39f680fb8d12c88fefc93
-	52ddf363ea110e5735123478769cda90c9b0581eb601d1a261c0ab3b911f292e
-	19a5f973f1e9291081aa05512e07c61447e8c30e1a43dd22d0cc1090837d1e19
-	61ecb0c334becf60da4a94482f10672434944e4d93e691651ec666cafb036646
-)
+sha256sums=('c34b619c1296d78d55f27b4478f9ab37bcdd4e873a532a78e4191da26cd50d23'
+            'bdb5e742345effd0a22c11c8da91be2a7104b3cc209eadcabf871e31c988a57e'
+            'eac6fabcfa38e21c33763cb0e5efc1aa30c333cf9cc39f680fb8d12c88fefc93'
+            '52ddf363ea110e5735123478769cda90c9b0581eb601d1a261c0ab3b911f292e'
+            '19a5f973f1e9291081aa05512e07c61447e8c30e1a43dd22d0cc1090837d1e19'
+            '61ecb0c334becf60da4a94482f10672434944e4d93e691651ec666cafb036646')
+
+options=(!emptydirs)
 
 prepare() {
 	# extracting app.asar from installer with 7z and ignoring errors
@@ -52,14 +52,14 @@ prepare() {
 	# extracting resources from app.asar
 	asar e "$srcdir/resources/app.asar" "$srcdir/asar_patched"
 	# replacing better_sqlite3 release in the patched resources
-	mv "$srcdir/build/Release/better_sqlite3.node" "$srcdir/asar_patched/node_modules/better-sqlite3/build/Release/"
+	install -vDm644 "$srcdir/build/Release/better_sqlite3.node" -t "$srcdir/asar_patched/node_modules/better-sqlite3/build/Release/"
 	# replacing bufferutil release in the patched resources
-	mv "$srcdir/linux-x64/node.napi.node" "$srcdir/asar_patched/node_modules/bufferutil/build/Release/bufferutil.node"
+	install -vDm644 "$srcdir/linux-x64/node.napi.node" "$srcdir/asar_patched/node_modules/bufferutil/build/Release/bufferutil.node"
 	# removing some unnecessary files (keeping them in this version to see if it improves stability)
 	# rm "$srcdir/asar_patched/node_modules/node-mac-window" -r
 	# rm "$srcdir/asar_patched/node_modules/better-sqlite3/build/Release/test_extension.node"
 	# adding tray icon to the unpacked resources
-	cp "$srcdir/notion.png" "$srcdir/asar_patched/.webpack/main/trayIcon.png"
+	install -vDm644 "$srcdir/notion.png" "$srcdir/asar_patched/.webpack/main/trayIcon.png"
 	# fixing tray icon and right click menu
 	sed -i 's|this.tray.on("click",(()=>{this.onClick()}))|this.tray.setContextMenu(this.trayMenu),this.tray.on("click",(()=>{this.onClick()}))|g' "$srcdir/asar_patched/.webpack/main/index.js"
 	sed -i 's|getIcon(){[^}]*}|getIcon(){return require("path").resolve(__dirname, "trayIcon.png");}|g' "$srcdir/asar_patched/.webpack/main/index.js"
@@ -87,8 +87,7 @@ package() {
 	install -d "$lib"
 	cp "$srcdir/app.asar" "$lib"
 	cp "$srcdir/app.asar.unpacked" "$lib" -r
-	install -Dm755 notion-app -t "$usr/bin"
-	install -Dm644 "$srcdir/notion.desktop" -t "$share/applications"
-	install -Dm644 "$srcdir/notion.png" -t "$share/icons/hicolor/256x256/apps"
-	find "$pkgdir" -type d -empty -delete
+	install -vDm755 notion-app -t "$usr/bin"
+	install -vDm644 "$srcdir/notion.desktop" -t "$share/applications"
+	install -vDm644 "$srcdir/notion.png" -t "$share/icons/hicolor/256x256/apps"
 }
