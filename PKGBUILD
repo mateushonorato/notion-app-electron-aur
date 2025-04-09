@@ -5,9 +5,9 @@
 
 pkgname=notion-app-electron
 pkgver=4.8.4
-_bettersqlite3ver=11.7.2
+_bettersqlite3ver=11.9.1
 _bufferutilver=4.0.8
-_elecronver=130
+_elecronver=132
 pkgrel=1
 pkgdesc="Your connected workspace for wiki, docs & projects"
 arch=(x86_64)
@@ -18,7 +18,7 @@ depends=(
 	gcc-libs
 	glibc
 	hicolor-icon-theme
-	electron33
+	electron34
 )
 makedepends=(
 	p7zip
@@ -35,9 +35,9 @@ source=(
 	notion.png
 )
 sha256sums=('c34b619c1296d78d55f27b4478f9ab37bcdd4e873a532a78e4191da26cd50d23'
-            'bdb5e742345effd0a22c11c8da91be2a7104b3cc209eadcabf871e31c988a57e'
+            'a976d128d113e6a6ed3b5505371a7269e0871375361480e9fc9ebf0ccedc5f59'
             'eac6fabcfa38e21c33763cb0e5efc1aa30c333cf9cc39f680fb8d12c88fefc93'
-            '52ddf363ea110e5735123478769cda90c9b0581eb601d1a261c0ab3b911f292e'
+            '8b38d2bb062799d90dee8d28275aa8bea27aa25a57024aefb3346ff93c803623'
             '19a5f973f1e9291081aa05512e07c61447e8c30e1a43dd22d0cc1090837d1e19'
             '61ecb0c334becf60da4a94482f10672434944e4d93e691651ec666cafb036646')
 
