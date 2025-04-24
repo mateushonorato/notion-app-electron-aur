@@ -54,7 +54,7 @@ prepare() {
 	# replacing better_sqlite3 release in the patched resources
 	install -vDm644 "$srcdir/build/Release/better_sqlite3.node" -t "$srcdir/asar_patched/node_modules/better-sqlite3/build/Release/"
 	# replacing bufferutil release in the patched resources
-	install -vDm644 "$srcdir/linux-x64/node.napi.node" "$srcdir/asar_patched/node_modules/bufferutil/build/Release/bufferutil.node"
+	install -vDm644 "$srcdir/linux-x64/bufferutil.node" "$srcdir/asar_patched/node_modules/bufferutil/build/Release/bufferutil.node"
 	# removing some unnecessary files (keeping them in this version to see if it improves stability)
 	# rm "$srcdir/asar_patched/node_modules/node-mac-window" -r
 	# rm "$srcdir/asar_patched/node_modules/better-sqlite3/build/Release/test_extension.node"
