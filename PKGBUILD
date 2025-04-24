@@ -6,7 +6,7 @@
 pkgname=notion-app-electron
 pkgver=4.9.1
 _bettersqlite3ver=11.9.1
-_bufferutilver=4.0.8
+_bufferutilver=4.0.9
 _elecronver=132
 pkgrel=1
 pkgdesc="Your connected workspace for wiki, docs & projects"
@@ -36,7 +36,7 @@ source=(
 )
 sha256sums=('9dcf5624d3688f87d95ef3e85c1b0ec7669f0b764395c172db447ff44c473360'
             'a976d128d113e6a6ed3b5505371a7269e0871375361480e9fc9ebf0ccedc5f59'
-            'eac6fabcfa38e21c33763cb0e5efc1aa30c333cf9cc39f680fb8d12c88fefc93'
+            '2139aae79c5a4fd4d07467bd9b7872ea109483aa43b3dfd6c8d3725ccba009be'
             '8b38d2bb062799d90dee8d28275aa8bea27aa25a57024aefb3346ff93c803623'
             '19a5f973f1e9291081aa05512e07c61447e8c30e1a43dd22d0cc1090837d1e19'
             '61ecb0c334becf60da4a94482f10672434944e4d93e691651ec666cafb036646')
